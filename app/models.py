@@ -20,7 +20,7 @@ class ProductCategory(TableModel):
   __tablename__ = "product_category"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
-  name:       Mapped[str]      = mapped_column()
+  name:       Mapped[str]      = mapped_column(unique=True)
   created_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
@@ -31,7 +31,7 @@ class Product(TableModel):
   __tablename__ = "product"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
-  name:       Mapped[str]      = mapped_column()
+  name:       Mapped[str]      = mapped_column(unique=True)
   created_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
