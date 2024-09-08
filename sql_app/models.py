@@ -16,7 +16,7 @@ class TableModel(DeclarativeBase):
 
 
 
-class ProductCategory(TableModel):
+class ProductCategoryTable(TableModel):
   __tablename__ = "product_category"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
@@ -24,10 +24,10 @@ class ProductCategory(TableModel):
   created_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
-  products: Mapped[List["Product"]] = relationship(back_populates="product_category")
+  products: Mapped[List["ProductTable"]] = relationship(back_populates="product_category")
                                      
 
-class Product(TableModel):
+class ProductTable(TableModel):
   __tablename__ = "product"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
@@ -36,5 +36,5 @@ class Product(TableModel):
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
   product_category_id: Mapped[int]               = mapped_column(ForeignKey("product_category.id"))
-  product_category:    Mapped["ProductCategory"] = relationship(back_populates="products") 
+  product_category:    Mapped["ProductCategoryTable"] = relationship(back_populates="products") 
   
