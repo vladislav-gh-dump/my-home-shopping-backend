@@ -1,8 +1,22 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, status, HTTPException
 from pydantic import BaseModel, Field
 
+from app.db import create_tables, delete_tables
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+   await create_tables()
+   print("База готова")
+   
+   yield
+   
+   # for dev
+   await delete_tables()
+   print("База очищена")
+
+app = FastAPI(lifespan=lifespan)
 
 
 class CreateProduct(BaseModel):
