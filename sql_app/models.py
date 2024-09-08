@@ -11,12 +11,12 @@ from sqlalchemy.orm import (
 )
 
 
-class TableModel(DeclarativeBase):
+class ORM_Base(DeclarativeBase):
   pass
 
 
 
-class ProductCategoryTable(TableModel):
+class ORM_ProductCategory(ORM_Base):
   __tablename__ = "product_category"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
@@ -24,10 +24,10 @@ class ProductCategoryTable(TableModel):
   created_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
-  products: Mapped[List["ProductTable"]] = relationship(back_populates="product_category")
+  products: Mapped[List["ORM_Product"]] = relationship(back_populates="product_category")
                                      
 
-class ProductTable(TableModel):
+class ORM_Product(ORM_Base):
   __tablename__ = "product"
   
   id:         Mapped[int]      = mapped_column(primary_key=True)
@@ -35,6 +35,6 @@ class ProductTable(TableModel):
   created_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
   updated_at: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
   
-  product_category_id: Mapped[int]               = mapped_column(ForeignKey("product_category.id"))
-  product_category:    Mapped["ProductCategoryTable"] = relationship(back_populates="products") 
+  product_category_id: Mapped[int]                  = mapped_column(ForeignKey("product_category.id"))
+  product_category:    Mapped["ORM_ProductCategory"] = relationship(back_populates="products") 
   
