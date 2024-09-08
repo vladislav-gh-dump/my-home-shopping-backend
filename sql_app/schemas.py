@@ -3,17 +3,17 @@ from typing import List
 from pydantic import BaseModel, Field
 
 
-class ProductBase(BaseModel):
+class S_ProductBase(BaseModel):
   name: str = Field(min_length=1, max_length=30)
   product_category_id: int | None = None
   
-class ProductCreate(ProductBase):
+class S_ProductCreate(S_ProductBase):
   pass
   
-class ProductUpdate(ProductBase):
+class S_ProductUpdate(S_ProductBase):
   pass
 
-class Product(ProductBase):
+class S_Product(S_ProductBase):
   id: int
   created_at: datetime
   updated_at: datetime
@@ -22,20 +22,20 @@ class Product(ProductBase):
     orm_mode = True
 
 
-class ProductCategoryBase(BaseModel):
+class S_ProductCategoryBase(BaseModel):
   name: str = Field(min_length=1, max_length=30)
   
-class ProductCategoryCreate(ProductCategoryBase):
+class S_ProductCategoryCreate(S_ProductCategoryBase):
   pass
   
-class ProductCategoryUpdate(ProductCategoryBase):
+class S_ProductCategoryUpdate(S_ProductCategoryBase):
   pass
 
-class ProductCategory(ProductCategoryBase):
+class S_ProductCategory(S_ProductCategoryBase):
   id: int
   created_at: datetime
   updated_at: datetime
-  products: List[Product] = []
+  products: List[S_Product] = []
   
   class Config:
     orm_mode = True
