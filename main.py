@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from sql_app.queries.structure_db import create_tables, delete_tables
 
 from routers import (
-  products_router
+  products_router,
+  product_categories_router
 )
 
 
@@ -22,3 +23,4 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(products_router)
+app.include_router(product_categories_router)
