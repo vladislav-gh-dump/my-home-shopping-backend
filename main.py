@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, status, HTTPException
 from pydantic import BaseModel, Field
 
-from app.crud import (
+from sql_app.crud import (
   create_tables, delete_tables,
   
 )
