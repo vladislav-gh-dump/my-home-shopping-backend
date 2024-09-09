@@ -1,5 +1,6 @@
 from typing import List, Optional
 from sqlalchemy import select, update
+from sqlalchemy.orm import joinedload
 from sqlalchemy.exc import SQLAlchemyError
 
 from sql_app.db import NewSession
@@ -15,10 +16,11 @@ class ProductCategoryRepo:
         async with NewSession() as session:
           result = await session.execute(
               select(ORM_ProductCategory)
+              .options(joinedload(ORM_ProductCategory.products))
               .limit(limit)
               .offset(skip)
           )
-          return result.scalars().all()
+          return result.unique().scalars().all()
       except SQLAlchemyError as e:
         print(f"Database error occurred: {e}")
         return []
@@ -29,9 +31,10 @@ class ProductCategoryRepo:
         async with NewSession() as session:
           result = await session.execute(
               select(ORM_ProductCategory)
+              .options(joinedload(ORM_ProductCategory.products))
               .where(ORM_ProductCategory.id == product_category_id)
           )
-          return result.scalar_one_or_none()
+          return result.unique().scalar_one_or_none()
       except SQLAlchemyError as e:
         print(f"Database error occurred: {e}")
         return None
@@ -48,6 +51,7 @@ class ProductCategoryRepo:
           return new_product_category.id
       except SQLAlchemyError as e:
         print(f"Database error occurred: {e}")
+        await session.rollback()
         return None
 
     @staticmethod
@@ -64,4 +68,5 @@ class ProductCategoryRepo:
           return result.rowcount 
       except SQLAlchemyError as e:
         print(f"Database error occurred: {e}")
+        await session.rollback()
         return None
