@@ -3,6 +3,8 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import joinedload
 from sqlalchemy.exc import SQLAlchemyError
 
+from dataclasses import dataclass
+
 from sql_app.db import NewSession
 from sql_app.models import (
     ORM_ProductCategory,
@@ -136,3 +138,10 @@ class Product:
 		except SQLAlchemyError as e:
 			print(f"Database error occurred: {e}")
 			return None
+
+
+
+@dataclass(frozen=True)
+class Repos:
+    product = Product
+    product_category = ProductCategory
