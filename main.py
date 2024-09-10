@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from sql_app.queries.structure_db import create_tables, delete_tables
+from sql_app.models import create_tables, delete_tables
 
 from routers import (
   products_router,
