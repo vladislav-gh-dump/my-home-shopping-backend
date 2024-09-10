@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
+from .db import engine
 from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import (
   DeclarativeBase, 
@@ -12,6 +13,17 @@ class ORM_Base(DeclarativeBase):
   pass
 
 
+async def create_tables():
+  async with engine.begin() as conn:
+    await conn.run_sync(ORM_Base.metadata.create_all)
+
+
+async def delete_tables():
+  async with engine.begin() as conn:
+    await conn.run_sync(ORM_Base.metadata.drop_all)
+
+
+# models
 
 class ORM_ProductCategory(ORM_Base):
   __tablename__ = "product_category"
@@ -34,4 +46,3 @@ class ORM_Product(ORM_Base):
   
   product_category_id: Mapped[Optional[int]]         = mapped_column(ForeignKey("product_category.id"))
   product_category:    Mapped["ORM_ProductCategory"] = relationship(back_populates="products") 
-  
