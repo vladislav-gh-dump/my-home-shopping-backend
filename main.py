@@ -5,8 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sql_app.models import create_tables, delete_tables
 
 from routers import (
-  products_router,
-  product_categories_router
+  product_router,
+  product_category_router
 )
 
 
@@ -32,5 +32,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(products_router)
-app.include_router(product_categories_router)
+app.include_router(product_router)
+app.include_router(product_category_router)

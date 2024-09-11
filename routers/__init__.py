@@ -1,2 +1,2 @@
-from .products import products_router
-from .product_categories import product_categories_router
+from .product import router as product_router
+from .product_category import router as product_category_router
