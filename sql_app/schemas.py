@@ -26,14 +26,14 @@ class NameSchema(BaseModel):
 
 
 class AtDatetimeSchema(BaseModel):
-	created_at: datetime
-	updated_at: datetime
+	created_at: datetime = Field(alias="createdAt")
+	updated_at: datetime = Field(alias="updatedAt")
 
 
 # Schemas for products 
 
 class ProductBaseSchema(NameSchema, BaseModel):
-	product_category_id: Optional[int] = None
+	product_category_id: Optional[int] = Field(default=None, alias="productCategoryId")
 
 class ProductCreateSchema(ProductBaseSchema): ...
 
